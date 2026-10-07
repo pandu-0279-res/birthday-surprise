@@ -1425,4 +1425,147 @@ const cakeScene =
     document.getElementById("cakeScene");
 
 const messageScene =
-    document.getElemen
+    document.getElementById("messageScene");
+
+const giftButton =
+    document.getElementById("giftButton");
+
+const giftBox =
+    document.getElementById("giftBox");
+
+const giftScene =
+    document.getElementById("giftScene");
+
+const finalScene =
+    document.getElementById("finalScene");
+
+const candles =
+    document.querySelectorAll(".candle");
+
+const candleText =
+    document.getElementById("candleText");
+
+let blownCandles = 0;
+
+openBow.addEventListener("click", function () {
+
+    opening.classList.add("hidden");
+    teddyScene.classList.remove("hidden");
+
+    setTimeout(function () {
+        createConfetti();
+    }, 2500);
+
+    setTimeout(function () {
+        teddyScene.classList.add("hidden");
+        cakeScene.classList.remove("hidden");
+    }, 5000);
+});
+
+
+candles.forEach(function(candle) {
+
+    candle.addEventListener("click", function() {
+
+        if (candle.classList.contains("off")) {
+            return;
+        }
+
+        candle.classList.add("off");
+        blownCandles++;
+
+        const remaining =
+            candles.length - blownCandles;
+
+        if (remaining > 0) {
+
+            candleText.textContent =
+                remaining +
+                " candle" +
+                (remaining === 1 ? "" : "s") +
+                " left... blow them out! 🕯️";
+
+        } else {
+
+            candleText.textContent =
+                "All candles are out! 🎉💗";
+
+            createConfetti();
+
+            setTimeout(function() {
+
+                cakeScene.classList.add("hidden");
+                messageScene.classList.remove("hidden");
+
+            }, 1800);
+        }
+    });
+});
+
+
+giftButton.addEventListener("click", function() {
+
+    messageScene.classList.add("hidden");
+    giftScene.classList.remove("hidden");
+
+});
+
+
+giftBox.addEventListener("click", function() {
+
+    giftScene.classList.add("hidden");
+    finalScene.classList.remove("hidden");
+
+    createConfetti();
+
+});
+
+
+function createConfetti() {
+
+    const confettiContainer =
+        document.getElementById("confetti");
+
+    const colors = [
+        "#ff6fa5",
+        "#ffd166",
+        "#7bdff2",
+        "#b8a1ff",
+        "#ff9f1c",
+        "#7ee081"
+    ];
+
+    for (let i = 0; i < 120; i++) {
+
+        const piece =
+            document.createElement("div");
+
+        piece.className =
+            "confetti-piece";
+
+        piece.style.left =
+            Math.random() * 100 + "vw";
+
+        piece.style.background =
+            colors[
+                Math.floor(
+                    Math.random() * colors.length
+                )
+            ];
+
+        piece.style.animationDelay =
+            Math.random() * 1.5 + "s";
+
+        piece.style.transform =
+            "rotate(" +
+            Math.random() * 360 +
+            "deg)";
+
+        confettiContainer.appendChild(piece);
+
+        setTimeout(function() {
+            piece.remove();
+        }, 5000);
+    }
+}
+</script>
